@@ -25,7 +25,7 @@ import com.backend.lojaintegrada.service.ClientesService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/vendas")
+@RequestMapping("/api/vendas")
 public class ClienteController {
 	
 	@Autowired

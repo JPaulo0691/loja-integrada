@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DialogCadClientesComponent } from './dialog-cad-clientes/dialog-cad-clientes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogCadClientesComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ import { ClientesService } from 'src/app/services/clientes.service';
 export class ClientesComponent implements OnInit {
 
   clientes$: Observable<Clientes[]>; //$ significa que tá trabalhando com Observables
-  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email'];
+  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'actions'];
 
   constructor(private clientesService : ClientesService ) {
 

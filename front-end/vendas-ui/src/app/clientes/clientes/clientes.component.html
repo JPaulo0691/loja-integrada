@@ -3,7 +3,20 @@
   <p>
     <mat-toolbar color="primary">
       <span>Clientes Cadastrados</span>
+
+      <section>
+        <div class="example-button-row">
+          <button mat-button color="white">
+            <a mat-button href="https://www.google.com/" target="_blank">Cadastrar</a>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="save"></mat-icon>
+
+          </button>
+        </div>
+      </section>
+
     </mat-toolbar>
+
+
   </p>
 
   <div *ngIf="clientes$ | async as clientes; else loading">

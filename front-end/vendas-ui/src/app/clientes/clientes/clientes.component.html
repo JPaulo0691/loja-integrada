@@ -6,8 +6,7 @@
 
       <section>
         <div id="bt-search">
-          <button mat-button color="white">
-            <a mat-button>Pesquisar</a>
+          <button mat-button color="white">Pesquisar
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
           </button>
         </div>
@@ -15,9 +14,8 @@
 
       <section>
         <div id="bt-cadastrar">
-          <button mat-button color="white" >
-            <a mat-button target="_blank">Cadastrar</a>
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="save"></mat-icon>
+          <button (click) = "onCadastrar()" mat-button color="white" >Cadastrar
+            <mat-icon aria-label="Cadastrar Cliente">save</mat-icon>
           </button>
         </div>
       </section>

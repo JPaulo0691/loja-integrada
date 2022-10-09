@@ -1,1 +1,38 @@
-<p>dialog-cad-clientes works!</p>
+<mat-card>
+
+  <mat-toolbar color="primary">
+    <span>Cadastrar Novos Clientes</span>
+  </mat-toolbar>
+
+  <mat-card-content>
+
+    <form [formGroup]="form" class="full-width">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Digite seu nome" formControlName = "nome">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Digite seu CPF" formControlName = "cpf">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Digite seu email" formControlName = "email">
+      </mat-form-field>
+
+      <mat-card-actions>
+
+        <button (click)="onCancel()" mat-button color="warn" id="btn-cancel">
+          CANCELAR
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <button (click)="onSave()" mat-button color="primary" id="btn-check">
+          SALVAR
+          <mat-icon>done</mat-icon>
+        </button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card-content>
+
+</mat-card>

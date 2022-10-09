@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

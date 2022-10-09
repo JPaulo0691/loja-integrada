@@ -20,4 +20,8 @@ export class ClientesService {
       tap(clientes => console.log(clientes))
     );
   }
+
+  save(record: Clientes){
+    return this.HttpClient.post<Clientes>(this.api, record).pipe(first());
+  }
 }

@@ -1,3 +1,4 @@
+import { ClientesDTO } from './../model/clientesDTO';
 import { Injectable } from '@angular/core';
 import { Clientes } from '../model/clientes';
 import {HttpClient} from '@angular/common/http';
@@ -8,7 +9,7 @@ import { delay, first, Observable, tap } from 'rxjs';
 })
 export class ClientesService {
 
-  private readonly api = '/api/vendas';
+  private readonly api = '/api/clientes';
 
   constructor(private HttpClient: HttpClient) { }
 
@@ -21,7 +22,7 @@ export class ClientesService {
     );
   }
 
-  save(record: Clientes){
-    return this.HttpClient.post<Clientes>(this.api, record).pipe(first());
+  save(record: ClientesDTO){
+    return this.HttpClient.post<ClientesDTO>(this.api, record).pipe(first());
   }
 }

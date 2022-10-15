@@ -25,13 +25,13 @@ import com.backend.lojaintegrada.service.ClientesService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/vendas")
+@RequestMapping("/api/clientes")
 public class ClienteController {
 	
 	@Autowired
 	ClientesService clientesService;
 	
-	@PostMapping("/cadastro")
+	@PostMapping
 	public ResponseEntity<Object> cadastrarCliente(@RequestBody @Valid ClienteDTO clienteDTO){
 		
 		if(clientesService.validarEmail(clienteDTO.getEmail())) {
@@ -43,11 +43,9 @@ public class ClienteController {
 		}
 		
 		var cliente = new Cliente();
-		BeanUtils.copyProperties(clienteDTO, cliente);
+		BeanUtils.copyProperties(clienteDTO, cliente);	
 		
-		clientesService.cadastrar(cliente);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com Sucesso!");
+		return ResponseEntity.status(HttpStatus.CREATED).body(clientesService.cadastrar(cliente));
 	}
 	
 	@GetMapping

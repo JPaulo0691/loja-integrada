@@ -31,5 +31,9 @@ export class ClientesComponent implements OnInit {
   onCadastrar(){
     this.router.navigate(['cadastrar'], {relativeTo: this.route});
   }
+  sort(){
+    //this.clientesService.sortList();
+    console.log('click')
+  }
 
 }

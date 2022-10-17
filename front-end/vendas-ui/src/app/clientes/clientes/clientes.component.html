@@ -5,6 +5,15 @@
       <span>Clientes Cadastrados</span>
 
       <section>
+        <div id="select">Filtrar
+          <select matNativeControl >
+            <option  value="none"></option>
+            <option  (click)="sort()"value="ordenar">A - Z</option>
+          </select>
+        </div>
+      </section>
+
+      <section>
         <div id="bt-search">
           <button mat-button color="white">Pesquisar
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>

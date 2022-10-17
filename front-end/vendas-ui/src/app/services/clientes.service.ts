@@ -11,6 +11,8 @@ export class ClientesService {
 
   private readonly api = '/api/clientes';
 
+  private readonly apiSort = '/api/clientes/listaordenada';
+
   constructor(private HttpClient: HttpClient) { }
 
   list() {
@@ -24,5 +26,9 @@ export class ClientesService {
 
   save(record: ClientesDTO){
     return this.HttpClient.post<ClientesDTO>(this.api, record).pipe(first());
+  }
+
+  sortList(){
+    return this.HttpClient.get<Clientes>(this.apiSort).pipe(first());
   }
 }

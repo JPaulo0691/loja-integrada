@@ -32,7 +32,7 @@ export class ClientesComponent implements OnInit {
     this.router.navigate(['cadastrar'], {relativeTo: this.route});
   }
   sort(){
-    //this.clientesService.sortList();
+    this.clientesService.sortList();
     console.log('click')
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { Location} from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClientesService } from 'src/app/services/clientes.service';
@@ -13,20 +13,21 @@ import { ClientesDTO } from '../../model/clientesDTO';
 })
 export class DialogCadClientesComponent implements OnInit {
 
-  form: FormGroup;
+  form = this.formBuilder.group({
+    nome: [''],
+    cpf: [''],
+    email: ['']
+  });
+
   msg?: string;
   erro?: string;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: NonNullableFormBuilder,
     private service: ClientesService,
     private snackBar: MatSnackBar,
     private location: Location
     ) {
-    this.form = this.formBuilder.group({
-      nome: [null],
-      cpf: [null],
-      email: [null]
-    });
+    //this.form =
   }
 
   ngOnInit(): void {

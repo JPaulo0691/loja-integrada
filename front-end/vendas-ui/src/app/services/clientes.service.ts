@@ -24,11 +24,11 @@ export class ClientesService {
     );
   }
 
-  save(record: ClientesDTO){
+  save(record: Partial<ClientesDTO>){
     return this.HttpClient.post<ClientesDTO>(this.api, record).pipe(first());
   }
 
   sortList(){
-    return this.HttpClient.get<Clientes>(this.apiSort).pipe(first());
+    return this.HttpClient.get<Clientes[]>(this.apiSort).pipe(first());
   }
 }

@@ -31,7 +31,7 @@ import com.backend.lojaintegrada.model.Pedido;
 import com.backend.lojaintegrada.service.PedidoService;
 
 @RestController
-@RequestMapping("/vendas/pedidos")
+@RequestMapping("/api/pedidos")
 public class PedidoController {	
 	
 	@Autowired

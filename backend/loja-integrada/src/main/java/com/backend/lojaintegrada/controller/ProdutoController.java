@@ -23,7 +23,7 @@ import com.backend.lojaintegrada.model.Produto;
 import com.backend.lojaintegrada.service.ProdutoService;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/api/produtos")
 public class ProdutoController {
 	
 	@Autowired
@@ -37,7 +37,7 @@ public class ProdutoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body("Produto cadastrado com Sucesso!");
 	}
 	
-	@GetMapping("/consultar")
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<Produto> consultar(){
 		

@@ -1,6 +1,9 @@
 package com.backend.lojaintegrada.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -8,9 +11,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.backend.lojaintegrada.service.UsuarioServiceImpl;
+
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	@Lazy //usar essa anotação para n dar problema de ciclo
+	private UsuarioServiceImpl usuarioService;
 	
 	//Esse método serve para encriptografar e para descriptografar a senha de um usuário
 	@Bean
@@ -24,27 +33,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {	
-		
-		auth.inMemoryAuthentication()
-			.passwordEncoder(passwordEnconder())
-			.withUser("joao")
-			.password(passwordEnconder().encode("1234"))
-			.roles("USER");
+		// Aqui é onde o usuário vai verificar a senha, de onde é que vamos buscar os usuários...
+		// porém para ele funcionar ele necessita de um passwordEncoder(método acima)
+		auth.userDetailsService(usuarioService)
+			.passwordEncoder(passwordEnconder());
 	}
 	
 	//Configuração de autorização das urls
 	// 1 - primeira coisa a fazer desabilitar csrf
-	//
+	// 2 - nesse método abaixo, ele pega os usuários que foram autenticados(método acima) e verfica se ele tem autorização
+	// para acessar a página.
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {		
 		
 		http.csrf()
 			.disable()
 			.authorizeRequests()
-			.antMatchers("api/clientes/**")
-			.authenticated() //para acessar esta url é necessário está autenticado ou posso usar uma role para acessar tal url
+			.antMatchers("/api/clientes/**")
+				.hasAnyRole("USER", "ADMIN")
+			.antMatchers("/api/produtos/**")
+				.hasRole("ADMIN")
+			.antMatchers("/api/pedidos/**")
+				.hasAnyRole("USER", "ADMIN")
+			.antMatchers(HttpMethod.POST, "/api/users/**")
+				.permitAll()
+				.anyRequest().authenticated()
 			.and()
-			.formLogin();
+			.httpBasic();
 	}
 	
 }

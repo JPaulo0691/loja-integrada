@@ -10,8 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.backend.lojaintegrada.exception.SenhaInvalidaException;
 import com.backend.lojaintegrada.model.Usuario;
 import com.backend.lojaintegrada.repository.UsuarioRepository;
+
+import ch.qos.logback.core.encoder.Encoder;
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService {
@@ -25,6 +28,18 @@ public class UsuarioServiceImpl implements UserDetailsService {
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
 		return usuarioRepository.save(usuario);
+	}
+	
+	public UserDetails autenticar(Usuario usuario) {
+		
+		UserDetails user = loadUserByUsername(usuario.getLogin());
+		boolean matchPassword = encrypt.matches(usuario.getSenha(), user.getPassword()); // compara a senha digitada com o hash gerado
+		
+		if(matchPassword) {
+			return user;
+		}
+		
+		throw new SenhaInvalidaException();
 	}
 
 	@Override

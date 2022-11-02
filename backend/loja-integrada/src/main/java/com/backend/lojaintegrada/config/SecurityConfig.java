@@ -8,9 +8,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.backend.lojaintegrada.security.jwt.JwtAuthFilter;
+import com.backend.lojaintegrada.security.jwt.JwtService;
 import com.backend.lojaintegrada.service.UsuarioServiceImpl;
 
 
@@ -21,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Lazy //usar essa anotação para n dar problema de ciclo
 	private UsuarioServiceImpl usuarioService;
 	
+	@Autowired
+	private JwtService jwtService;
+	
 	//Esse método serve para encriptografar e para descriptografar a senha de um usuário
 	@Bean
 	public PasswordEncoder passwordEnconder() {
@@ -29,6 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		  sendo este hash sempre diferente para toda vez que a senha é gerada.		  
 		*/
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public OncePerRequestFilter jwtFilter() {
+		return new JwtAuthFilter(jwtService, usuarioService);
 	}
 	
 	@Override
@@ -59,7 +72,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.permitAll()
 				.anyRequest().authenticated()
 			.and()
-			.httpBasic();
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 	
 }
